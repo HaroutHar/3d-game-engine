@@ -54,6 +54,8 @@ public class GameFrame extends JFrame implements Runnable
 		{1,1,1,1,1,1,1,4,4,4,4,4,4,4,4}
 	};
 
+	public PlayersCamera player; // players data object
+
 	public GameFrame()
 	{
 		// Open a new empty gameEngineThread
@@ -64,6 +66,9 @@ public class GameFrame extends JFrame implements Runnable
 		// start the engine
 		setJframeConfigs();
 		startEngine();
+
+		player = new PlayersCamera(4.5, 4.5, 1, 0, 0, -.66);
+		addKeyListener(player);
 	}
 
 	private void setJframeConfigs()
@@ -158,6 +163,7 @@ public class GameFrame extends JFrame implements Runnable
 			 */
 			while (delta >= 1) {
 				//handles all of the logic restricted time
+				player.update(gameMapOverview);
 				delta--;
 			}
 
