@@ -3,8 +3,15 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
+/**
+ * Game Engine Public class: JFrame :Runnable
+ *
+ * engine main class - initialize textures, render path and threads
+ *
+ */
 public class GameFrame extends JFrame implements Runnable
 {
 	private static final long serialVersionUID = 1L;
@@ -18,6 +25,9 @@ public class GameFrame extends JFrame implements Runnable
 	private BufferedImage imageBuffer;
 
 	public int[] pixels;
+
+	// array for our textures
+	public ArrayList<Texturing> textures;
 
 	/**
 	 * Game map overview from top
@@ -91,6 +101,14 @@ public class GameFrame extends JFrame implements Runnable
 		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setTextures()
+	{
+		textures = new ArrayList<Texturing>();
+
+		textures.add(Texturing.wood);
+		textures.add(Texturing.stone);
 	}
 
 	public void render()

@@ -5,6 +5,11 @@ import javax.imageio.ImageIO;
 
 public class Texturing
 {
+
+	// create textures
+	public static Texturing wood = new Texturing("assets/images/wood.png", 64);
+	public static Texturing stone = new Texturing("assets/images/stone.png", 64);
+
 	public int[] pixels; //pixel grid of the the image
 
 	private String imagePath;
