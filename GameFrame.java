@@ -94,8 +94,58 @@ public class GameFrame extends JFrame implements Runnable
 		}
 	}
 
+	public void render()
+	{
+		// set window buffer for smooth running when creating sequension
+		BufferStrategy windowBuffer = getBufferStrategy();
+
+		if (windowBuffer == null) {
+			createBufferStrategy(3);
+			return;
+		}
+
+		Graphics graphics = windowBuffer.getDrawGraphics();
+
+		// get pre rendered image
+		graphics.drawImage(
+			imageBuffer,
+			0,
+			0,
+			imageBuffer.getWidth(),
+			imageBuffer.getHeight(),
+			null
+		);
+
+		// render graphics
+		windowBuffer.show();
+	}
+
 	public void run()
 	{
+		long lastTime = System.nanoTime();
+		final double nanoseconds = 1000000000.0 / 60.0;//60 times per second
 
+		double delta = 0;
+		requestFocus();
+
+		while(running) {
+			long now = System.nanoTime();
+			delta = delta + ((now - lastTime) / nanoseconds);
+			lastTime = now;
+
+			/**
+			 * Make sure update is only happening 60 times a second
+			 *
+			 * Allows to atchive smooth 60fps
+			 *
+			 */
+			while (delta >= 1) {
+				//handles all of the logic restricted time
+				delta--;
+			}
+
+			// displays to the screen unrestricted time
+			render();
+		}
 	}
 }
