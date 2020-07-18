@@ -55,6 +55,7 @@ public class GameFrame extends JFrame implements Runnable
 	};
 
 	public PlayersCamera player; // players data object
+	public EngineScreen screen;
 
 	public GameFrame()
 	{
@@ -63,12 +64,14 @@ public class GameFrame extends JFrame implements Runnable
 		imageBuffer = new BufferedImage(640, 480, BufferedImage.TYPE_INT_RGB); // set the image buffer for texturing
 		pixels = ((DataBufferInt)imageBuffer.getRaster().getDataBuffer()).getData(); // get image buffer data
 
+		setTextures();
+		player = new PlayersCamera(4.5, 4.5, 1, 0, 0, -.66);
+		screen = new EngineScreen(gameMapOverview, mapWidth, mapHeight, textures, 640, 480);
+		addKeyListener(player);
+
 		// start the engine
 		setJframeConfigs();
 		startEngine();
-
-		player = new PlayersCamera(4.5, 4.5, 1, 0, 0, -.66);
-		addKeyListener(player);
 	}
 
 	private void setJframeConfigs()
@@ -113,6 +116,8 @@ public class GameFrame extends JFrame implements Runnable
 		textures = new ArrayList<Texturing>();
 
 		textures.add(Texturing.wood);
+		textures.add(Texturing.brick);
+		textures.add(Texturing.dirt);
 		textures.add(Texturing.stone);
 	}
 
@@ -163,6 +168,7 @@ public class GameFrame extends JFrame implements Runnable
 			 */
 			while (delta >= 1) {
 				//handles all of the logic restricted time
+				screen.update(player, pixels);
 				player.update(gameMapOverview);
 				delta--;
 			}
